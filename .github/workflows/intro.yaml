@@ -1,7 +1,13 @@
 name: Hello World
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secret.VERCEL_PROJECT_ID }}
+  VERCEL_DEPLOY_TOKEN: ${{ secret.VERCEL_DEPLOY_TOKEN }}
+
 on:
   push:
+
 
 jobs: 
   build:
@@ -37,3 +43,18 @@ jobs:
 
       - name: Build the app
         run: npm run build
+
+  snapshot: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build snapshot
+        run: node snapshot.js
+      
+      - name: Move snapshot
+        run: mv -v /gen/* /static/
+  
+  # deploy:
+  #   runs-on: ubuntu-latest
+
+  #   steps: 
